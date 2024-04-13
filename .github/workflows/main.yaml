@@ -31,6 +31,6 @@ jobs:
             cd ./$SERVICE
             docker build -t rahul4884/$LOWERCASE_SERVICE:latest .  # Use lowercase service name for tagging
             docker push rahul4884/$LOWERCASE_SERVICE:latest  # Push image with lowercase service name
-            ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "docker pull rahul4884/$LOWERCASE_SERVICE:latest && docker stop ${LOWERCASE_SERVICE}_container || true && docker rm ${LOWERCASE_SERVICE}_container || true && docker run -d --name ${LOWERCASE_SERVICE}_container -p ${PORTS[$i]}:${PORTS[$i]} rahul4884/$LOWERCASE_SERVICE:latest"  # Use lowercase service name for container operations
+            ssh -i ${{ secrets.SSH_PRIVATE_KEY }} ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "docker pull rahul4884/$LOWERCASE_SERVICE:latest && docker stop ${LOWERCASE_SERVICE}_container || true && docker rm ${LOWERCASE_SERVICE}_container || true && docker run -d --name ${LOWERCASE_SERVICE}_container -p ${PORTS[$i]}:${PORTS[$i]} rahul4884/$LOWERCASE_SERVICE:latest"  # Use lowercase service name for container operations
             cd ..
           done
