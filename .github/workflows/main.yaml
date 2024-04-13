@@ -26,11 +26,11 @@ jobs:
 
           for i in "${!SERVICES[@]}"; do
             SERVICE="${SERVICES[$i]}"
-            PORT="${PORTS[$i]}"
+            LOWERCASE_SERVICE="$(echo "$SERVICE" | tr '[:upper:]' '[:lower:]')"  # Convert service name to lowercase
             
             cd ./$SERVICE
-            docker build -t rahul4884/$SERVICE:latest .
-            docker push rahul4884/$SERVICE:latest
-            ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "docker pull rahul4884/$SERVICE:latest && docker stop ${SERVICE,,}_container || true && docker rm ${SERVICE,,}_container || true && docker run -d --name ${SERVICE,,}_container -p $PORT:$PORT rahul4884/$SERVICE:latest"
+            docker build -t rahul4884/$LOWERCASE_SERVICE:latest .  # Use lowercase service name for tagging
+            docker push rahul4884/$LOWERCASE_SERVICE:latest  # Push image with lowercase service name
+            ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "docker pull rahul4884/$LOWERCASE_SERVICE:latest && docker stop ${LOWERCASE_SERVICE}_container || true && docker rm ${LOWERCASE_SERVICE}_container || true && docker run -d --name ${LOWERCASE_SERVICE}_container -p ${PORTS[$i]}:${PORTS[$i]} rahul4884/$LOWERCASE_SERVICE:latest"  # Use lowercase service name for container operations
             cd ..
           done
