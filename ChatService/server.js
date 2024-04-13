@@ -5,6 +5,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv"
 
+
 dotenv.config({path:"../.env"})
 export const app = express();
 app.use(bodyParser.json());
@@ -17,25 +18,26 @@ const corsOptions = {
   origin: JSON.parse(process.env.ORIGIN),
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
-
 app.use(
   cors({
     ...corsOptions,
     exposedHeaders: ["x_accesstoken", "x_refreshtoken"],
   })
 );
-const PORT = process.env.USER_SERVICE_PORT || 7001;
+const PORT = process.env.CHAT_SERVICE_PORT || 3001;
 
-const db = process.env.USER_SERVICE_MONGO_URL;
+
+const db = process.env.CHAT_SERVICE_MONGO_URL;
 mongoose
   .connect(db)
   .then(() => {
-
     app.listen(PORT, () => {
-      console.log(`User Service running on port: ${PORT} 🚀`);
+      console.log(`Chat Service Server running on port: ${PORT} 🚀`);
     });
   })
   .catch((error) => console.log(error.message));
+
+
 
 
 app.use("*", (req, res) => {

@@ -24,15 +24,15 @@ app.use(
     exposedHeaders: ["x_accesstoken", "x_refreshtoken"],
   })
 );
-const PORT = process.env.USER_SERVICE_PORT || 7001;
+const PORT = process.env.SUBJECT_SERVICE_PORT || 6001;
 
-const db = process.env.USER_SERVICE_MONGO_URL;
+const db = process.env.SUBJECT_SERVICE_MONGO_URL;
 mongoose
   .connect(db)
   .then(() => {
 
     app.listen(PORT, () => {
-      console.log(`User Service running on port: ${PORT} 🚀`);
+      console.log(`Subject Service running on port: ${PORT} 🚀`);
     });
   })
   .catch((error) => console.log(error.message));
