@@ -1,7 +1,7 @@
 # Dockerfile for ChatService
 
 # Use a base image with Node.js
-FROM node:latest
+FROM node:21-bookworm-slim
 
 # Set working directory
 WORKDIR /app
