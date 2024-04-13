@@ -13,8 +13,6 @@ RUN npm install
 # Copy application code
 COPY . .
 
-# Copy env file
-COPY ../.env ./
 
 # Expose the port
 EXPOSE 4001
