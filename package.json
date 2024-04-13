@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "dependencies": {
     "buffer-equal-constant-time": "^1.0.1",
     "ecdsa-sig-formatter": "^1.0.11",
