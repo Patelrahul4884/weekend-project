@@ -24,9 +24,22 @@ jobs:
             PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
             HOSTNAME: ${{secrets.EC2_HOST}}
             USER_NAME: ${{secrets.EC2_USERNAME}}
+            CHAT_SERVICE_PORT: ${{ secrets.CHAT_SERVICE_PORT }}
+            CLASSROOM_SERVICE_PORT: ${{ secrets.CLASSROOM_SERVICE_PORT }}
+            ROLES_SERVICE_PORT: ${{ secrets.ROLES_SERVICE_PORT }}
+            SUBJECT_SERVICE_PORT: ${{ secrets.SUBJECT_SERVICE_PORT }}
+            USER_SERVICE_PORT: ${{ secrets.USER_SERVICE_PORT }}
+            VIDEO_SERVICE_PORT: ${{ secrets.VIDEO_SERVICE_PORT }}
+            CHAT_SERVICE_MONGO_URL: ${{ secrets.CHAT_SERVICE_MONGO_URL }}
+            CLASSROOM_SERVICE_MONGO_URL: ${{ secrets.CLASSROOM_SERVICE_MONGO_URL }}
+            ROLES_SERVICE_MONGO_URL: ${{ secrets.ROLES_SERVICE_MONGO_URL }}
+            SUBJECT_SERVICE_MONGO_URL: ${{ secrets.SUBJECT_SERVICE_MONGO_URL }}
+            USER_SERVICE_MONGO_URL: ${{ secrets.USER_SERVICE_MONGO_URL }}
+            VIDEO_SERVICE_MONGO_URL: ${{ secrets.VIDEO_SERVICE_MONGO_URL }}
+            ORIGIN: ${{ secrets.ORIGIN }}
         run: |
           SERVICES=(ChatService ClassroomService RolesService SubjectService UserService VideoService)
-          PORTS=(3001 4001 5001 6001 7001 8001)
+          PORTS=(${CHAT_SERVICE_PORT} ${CLASSROOM_SERVICE_PORT} ${ROLES_SERVICE_PORT} ${SUBJECT_SERVICE_PORT} ${USER_SERVICE_PORT} ${VIDEO_SERVICE_PORT})
 
           for i in "${!SERVICES[@]}"; do
             SERVICE="${SERVICES[$i]}"
@@ -35,7 +48,11 @@ jobs:
             cd ./$SERVICE
             docker build -t rahul4884/$LOWERCASE_SERVICE:latest .  # Use lowercase service name for tagging
             docker push rahul4884/$LOWERCASE_SERVICE:latest  # Push image with lowercase service name
-            # echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+            echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+            scp -o StrictHostKeyChecking=no -i private_key docker-compose.yml ${USER_NAME}@${HOSTNAME}:~/docker-compose.yml
+            
+            # SSH into the EC2 instance and run Docker Compose with environment variables
+            ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} "CHAT_SERVICE_PORT=${CHAT_SERVICE_PORT} CLASSROOM_SERVICE_PORT=${CLASSROOM_SERVICE_PORT} ROLES_SERVICE_PORT=${ROLES_SERVICE_PORT} SUBJECT_SERVICE_PORT=${SUBJECT_SERVICE_PORT} USER_SERVICE_PORT=${USER_SERVICE_PORT} VIDEO_SERVICE_PORT=${VIDEO_SERVICE_PORT} CHAT_SERVICE_MONGO_URL=${CHAT_SERVICE_MONGO_URL} CLASSROOM_SERVICE_MONGO_URL=${CLASSROOM_SERVICE_MONGO_URL} ROLES_SERVICE_MONGO_URL=${ROLES_SERVICE_MONGO_URL} SUBJECT_SERVICE_MONGO_URL=${SUBJECT_SERVICE_MONGO_URL} USER_SERVICE_MONGO_URL=${USER_SERVICE_MONGO_URL} VIDEO_SERVICE_MONGO_URL=${VIDEO_SERVICE_MONGO_URL} ORIGIN=${ORIGIN} docker-compose -f ~/docker-compose.yml up -d"
             # ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} "docker pull rahul4884/$LOWERCASE_SERVICE:latest && docker stop ${LOWERCASE_SERVICE}_container || true && docker rm ${LOWERCASE_SERVICE}_container || true && docker run -d --name ${LOWERCASE_SERVICE}_container -p ${PORTS[$i]}:${PORTS[$i]} rahul4884/$LOWERCASE_SERVICE:latest"  # Use lowercase service name for container operations
             cd ..
           done
