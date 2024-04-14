@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv"
+import userRouter from "./userservice.routes.js";
 
 dotenv.config({path:"../.env"})
 export const app = express();
@@ -37,6 +38,7 @@ mongoose
   })
   .catch((error) => console.log(error.message));
 
+app.use("/user",userRouter);
 
 app.use("*", (req, res) => {
   res.status(404).json({
