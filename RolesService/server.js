@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv"
+import rolesRouter from "./rolesservice.routes.js";
 
 
 dotenv.config({path:"../.env"})
@@ -13,7 +14,7 @@ app.disable("x-powered-by");
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cookieParser())
-console.log(JSON.parse(process.env.ORIGIN));
+// console.log(JSON.parse(process.env.ORIGIN));
 const corsOptions = {
   origin: JSON.parse(process.env.ORIGIN),
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
@@ -38,7 +39,7 @@ mongoose
   .catch((error) => console.log(error.message));
 
 
-
+app.use('/role',rolesRouter)
 
 app.use("*", (req, res) => {
   res.status(404).json({
@@ -47,3 +48,4 @@ app.use("*", (req, res) => {
     data: null,
   });
 });
+
