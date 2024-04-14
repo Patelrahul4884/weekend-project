@@ -13,10 +13,6 @@ RUN npm install
 # Copy application code
 COPY . .
 
-# ENV SUBJECT_SERVICE_PORT=6001
-# ENV SUBJECT_SERVICE_MONGO_URL=mongodb://subjectservice_mongodb:27017/subject_service
-# ENV ORIGIN='["http://localhost:3000/","*"]'
-
 # Expose the port
 EXPOSE 6001
 
