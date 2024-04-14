@@ -1,7 +1,7 @@
 # Dockerfile for UserService
 
 # Use a base image with Node.js
-FROM node:latest
+FROM node:21-bookworm-slim
 
 # Set working directory
 WORKDIR /app
@@ -13,8 +13,10 @@ RUN npm install
 # Copy application code
 COPY . .
 
+COPY ../*env .
+
 # Expose the port
 EXPOSE 7001
 
 # Command to run the application
-CMD ["node", "index.js"]
+CMD ["node", "server.js"]
