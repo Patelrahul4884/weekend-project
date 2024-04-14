@@ -13,9 +13,9 @@ RUN npm install
 # Copy application code
 COPY . .
 
-ENV CLASSROOM_SERVICE_PORT=4001
-ENV CLASSROOM_SERVICE_MONGO_URL=mongodb://classroomservice_mongodb:27017/classroom_service
-ENV ORIGIN='["http://localhost:3000/","*"]'
+# ENV CLASSROOM_SERVICE_PORT=4001
+# ENV CLASSROOM_SERVICE_MONGO_URL=mongodb://classroomservice_mongodb:27017/classroom_service
+# ENV ORIGIN='["http://localhost:3000/","*"]'
 
 # Expose the port
 EXPOSE 4001

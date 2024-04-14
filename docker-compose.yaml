@@ -3,6 +3,10 @@ version: '3.8'
 services:
   ChatService:
     image: rahul4884/chatservice:latest  # Change to your Docker Hub image
+    environment:
+      - CHAT_SERVICE_PORT=3001
+      - CHAT_SERVICE_MONGO_URL=mongodb://chatservice_mongodb:27017/chat_service
+      - ORIGIN='["http://localhost:3000/","*"]'
     ports:
       - "3001:3001"
     volumes:
@@ -21,6 +25,10 @@ services:
 
   ClassroomService:
     image: rahul4884/classroomservice:latest  # Change to your Docker Hub image
+    environment:
+      - CLASSROOM_SERVICE_PORT=4001
+      - CLASSROOM_SERVICE_MONGO_URL=mongodb://classroomservice_mongodb:27017/classroom_service
+      - ORIGIN='["http://localhost:3000/","*"]'
     ports:
       - "4001:4001"
     volumes:
@@ -39,6 +47,10 @@ services:
 
   RolesService:
     image: rahul4884/rolesservice:latest  # Change to your Docker Hub image
+    environment:
+      - ROLES_SERVICE_PORT=5001
+      - ROLES_SERVICE_MONGO_URL=mongodb://rolesservice_mongodb/roles_service
+      - ORIGIN='["http://localhost:3000/","*"]'
     ports:
       - "5001:5001"
     volumes:
@@ -57,6 +69,10 @@ services:
 
   SubjectService:
     image: rahul4884/subjectservice:latest  # Change to your Docker Hub image
+    environment:
+      - SUBJECT_SERVICE_PORT=6001
+      - SUBJECT_SERVICE_MONGO_URL=mongodb://subjectservice_mongodb/subject_service
+      - ORIGIN='["http://localhost:3000/","*"]'
     ports:
       - "6001:6001"
     volumes:
