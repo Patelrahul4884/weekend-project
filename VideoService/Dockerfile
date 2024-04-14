@@ -13,7 +13,9 @@ RUN npm install
 # Copy application code
 COPY . .
 
-COPY ../*env .
+ENV VIDEO_SERVICE_PORT=8001
+ENV VIDEO_SERVICE_MONGO_URL=mongodb://videoservice_mongodb:27017/video_service
+ENV ORIGIN='["http://localhost:3000/","*"]'
 
 # Expose the port
 EXPOSE 8001

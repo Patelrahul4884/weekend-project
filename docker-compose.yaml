@@ -1,0 +1,137 @@
+version: '3.8'
+
+services:
+  ChatService:
+    image: rahul4884/chatservice:latest  # Change to your Docker Hub image
+    ports:
+      - "3001:3001"
+    volumes:
+      - chatservice_data:/app/data
+    networks:
+      - chatservice_network
+    depends_on:
+      - chatservice_mongodb
+
+  chatservice_mongodb:
+    image: mongo:latest
+    volumes:
+      - chatservice_data:/data/db
+    networks:
+      - chatservice_network
+
+  ClassroomService:
+    image: rahul4884/classroomservice:latest  # Change to your Docker Hub image
+    ports:
+      - "4001:4001"
+    volumes:
+      - classroomservice_data:/app/data
+    networks:
+      - classroomservice_network
+    depends_on:
+      - classroomservice_mongodb
+
+  classroomservice_mongodb:
+    image: mongo:latest
+    volumes:
+      - classroomservice_data:/data/db
+    networks:
+      - classroomservice_network
+
+  RolesService:
+    image: rahul4884/rolesservice:latest  # Change to your Docker Hub image
+    ports:
+      - "5001:5001"
+    volumes:
+      - rolesservice_data:/app/data
+    networks:
+      - rolesservice_network
+    depends_on:
+      - rolesservice_mongodb
+
+  rolesservice_mongodb:
+    image: mongo:latest
+    volumes:
+      - rolesservice_data:/data/db
+    networks:
+      - rolesservice_network
+
+  SubjectService:
+    image: rahul4884/subjectservice:latest  # Change to your Docker Hub image
+    ports:
+      - "6001:6001"
+    volumes:
+      - subjectservice_data:/app/data
+    networks:
+      - subjectservice_network
+    depends_on:
+      - subjectservice_mongodb
+
+  subjectservice_mongodb:
+    image: mongo:latest
+    volumes:
+      - subjectservice_data:/data/db
+    networks:
+      - subjectservice_network
+
+  UserService:
+    image: rahul4884/userservice:latest  # Change to your Docker Hub image
+    ports:
+      - "7001:7001"
+    volumes:
+      - userservice_data:/app/data
+    networks:
+      - userservice_network
+    depends_on:
+      - userservice_mongodb
+
+  userservice_mongodb:
+    image: mongo:latest
+    volumes:
+      - userservice_data:/data/db
+    networks:
+      - userservice_network
+
+  VideoService:
+    image: rahul4884/videoservice:latest  # Change to your Docker Hub image
+    ports:
+      - "8001:8001"
+    volumes:
+      - videoservice_data:/app/data
+    networks:
+      - videoservice_network
+    depends_on:
+      - videoservice_mongodb
+
+  videoservice_mongodb:
+    image: mongo:latest
+    volumes:
+      - videoservice_data:/data/db
+    networks:
+      - videoservice_network
+
+networks:
+  chatservice_network:
+    driver: bridge
+
+  classroomservice_network:
+    driver: bridge
+
+  rolesservice_network:
+    driver: bridge
+
+  subjectservice_network:
+    driver: bridge
+
+  userservice_network:
+    driver: bridge
+
+  videoservice_network:
+    driver: bridge
+
+volumes:
+  chatservice_data:
+  classroomservice_data:
+  rolesservice_data:
+  subjectservice_data:
+  userservice_data:
+  videoservice_data:

@@ -13,7 +13,9 @@ RUN npm install
 # Copy application code
 COPY . .
 
-COPY ../*env .
+ENV USER_SERVICE_PORT=7001
+ENV USER_SERVICE_MONGO_URL=mongodb://userservice_mongodb:27017/user_service
+ENV ORIGIN='["http://localhost:3000/","*"]'
 
 # Expose the port
 EXPOSE 7001
