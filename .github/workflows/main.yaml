@@ -49,6 +49,7 @@ jobs:
             docker build -t rahul4884/$LOWERCASE_SERVICE:latest .  # Use lowercase service name for tagging
             docker push rahul4884/$LOWERCASE_SERVICE:latest  # Push image with lowercase service name
             echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+            cd ..
           done
           scp -o StrictHostKeyChecking=no -i private_key docker-compose.yml ${USER_NAME}@${HOSTNAME}:~/docker-compose.yml
             
