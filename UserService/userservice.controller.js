@@ -1,6 +1,12 @@
 import User from "./userservice.db.js";
+import { sendJSONResponse } from "../config.js"
+import rmqChannel from "../connectToMq.js"
+
+const queue='user-service-queue'
+rmqChannel.assertQueue(queue)
 
 export const createUser = async (req, res) => {
+    // console.log(data2);
     try {
         let newUser = new User(req.body);
         newUser = await newUser.save();

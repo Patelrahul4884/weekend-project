@@ -13,7 +13,7 @@ app.disable("x-powered-by");
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cookieParser())
-console.log(JSON.parse(process.env.ORIGIN));
+// console.log(JSON.parse(process.env.ORIGIN));
 const corsOptions = {
   origin: JSON.parse(process.env.ORIGIN),
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
