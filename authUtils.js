@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken"
-import { sendJSONResponse } from "../config.js"
+import { sendJSONResponse } from "./config.js"
 
 export const signJwt = async (payload, secretKey, expireTime) => {
     try {

@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "dependencies": {
+    "amqplib": "^0.10.4",
     "buffer-equal-constant-time": "^1.0.1",
     "ecdsa-sig-formatter": "^1.0.11",
     "jsonwebtoken": "^9.0.2",
